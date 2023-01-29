@@ -17,7 +17,7 @@ add_library(vma-hpp
         src/VmaUsage.h
         src/VmaUsage.cpp)
 
-add_library(Vulkan::MemoryAllocator ALIAS vma-hpp)
+add_library(Vulkan::MemoryAllocatorHpp ALIAS vma-hpp)
 
 target_include_directories(vma-hpp PUBLIC include/)
 target_link_libraries(vma-hpp PUBLIC Vulkan::Headers)
