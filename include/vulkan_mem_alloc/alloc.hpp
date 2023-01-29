@@ -2,7 +2,7 @@
 #define VULKAN_MEMORY_ALLOCATOR_HPP
 
 #if !defined(AMD_VULKAN_MEMORY_ALLOCATOR_H)
-#include <vk_mem_alloc.h>
+#include "priv/vk_mem_alloc.h"
 #endif
 
 #include <vulkan/vulkan.hpp>
@@ -72,10 +72,10 @@ namespace VMA_HPP_NAMESPACE {
 }
 #endif
 
-#include "vk_mem_alloc_enums.hpp"
-#include "vk_mem_alloc_handles.hpp"
-#include "vk_mem_alloc_structs.hpp"
-#include "vk_mem_alloc_funcs.hpp"
+#include "vulkan_mem_alloc/alloc_enums.hpp"
+#include "vulkan_mem_alloc/alloc_handles.hpp"
+#include "vulkan_mem_alloc/alloc_structs.hpp"
+#include "vulkan_mem_alloc/alloc_funcs.hpp"
 
 namespace VMA_HPP_NAMESPACE {
   

@@ -1,59 +1,23 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(
-    VulkanMemoryAllocator-Hpp
-    VERSION 0
+project(vma-hpp VERSION 1.0.0
     DESCRIPTION "C++ bindings for the VulkanMemoryAllocator library."
-    LANGUAGES C CXX)
+    LANGUAGES CXX)
 
 find_package(Vulkan REQUIRED)
 
-if(EXISTS VulkanMemoryAllocator/CMakeLists.txt)
-    add_subdirectory(VulkanMemoryAllocator)
-else()
-    find_package(VulkanMemoryAllocator REQUIRED)
-endif()
+add_library(vma-hpp
+        include/priv/vk_mem_alloc.h
+        include/vulkan_mem_alloc/alloc.hpp
+        include/vulkan_mem_alloc/alloc_enums.hpp
+        include/vulkan_mem_alloc/alloc_funcs.hpp
+        include/vulkan_mem_alloc/alloc_handles.hpp
+        include/vulkan_mem_alloc/alloc_raii.hpp
+        include/vulkan_mem_alloc/alloc_structs.hpp
+        src/VmaUsage.h
+        src/VmaUsage.cpp)
 
-add_library(VulkanMemoryAllocator-Hpp INTERFACE)
+add_library(Vulkan::MemoryAllocator ALIAS vma-hpp)
 
-target_include_directories(VulkanMemoryAllocator-Hpp
-    INTERFACE
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        $<INSTALL_INTERFACE:include>
-)
-
-target_link_libraries(VulkanMemoryAllocator-Hpp
-    INTERFACE
-        Vulkan::Vulkan
-        VulkanMemoryAllocator::VulkanMemoryAllocator
-)
-
-install(
-    FILES
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/vk_mem_alloc_enums.hpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/vk_mem_alloc_funcs.hpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/vk_mem_alloc_handles.hpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/vk_mem_alloc_structs.hpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/vk_mem_alloc.hpp
-    DESTINATION
-        include
-)
-
-install(
-    FILES
-        ${CMAKE_CURRENT_SOURCE_DIR}/cmake/VulkanMemoryAllocator-HppConfig.cmake
-    DESTINATION
-        lib/cmake/VulkanMemoryAllocator-Hpp
-)
-
-install(
-    TARGETS VulkanMemoryAllocator-Hpp
-    EXPORT VulkanMemoryAllocator-HppTargets
-)
-
-install(
-    EXPORT VulkanMemoryAllocator-HppTargets
-    FILE VulkanMemoryAllocator-HppTargets.cmake
-    NAMESPACE VulkanMemoryAllocator-Hpp::
-    DESTINATION lib/cmake/VulkanMemoryAllocator-Hpp
-)
+target_include_directories(vma-hpp PUBLIC include/)
+target_link_libraries(vma-hpp PUBLIC Vulkan::Headers)
